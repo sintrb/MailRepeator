@@ -123,8 +123,8 @@ class MainSMTPServer(smtpd.SMTPServer):
         receivers = options.get('receivers')
         for toaddr in receivers:
             fromaddr = proxy.get('fromaddr') or proxy.get('username')
-            del mail['To']
-            del mail['From']
+            for k in ['To', 'From', 'DKIM-Signature', 'X-QQ-FEAT', 'X-QQ-SSF', 'X-HAS-ATTACH', 'X-QQ-BUSINESS-ORIGIN', 'X-QQ-DNTY', 'X-Originating-IP', 'X-QQ-STYLE', 'X-QQ-mid', 'X-QQ-MIME', 'X-Mailer', 'X-QQ-Maile', 'X-QQ-SENDSIZE']:
+                del mail[k]
             mail['To'] = email.utils.formataddr((re.findall('(\S+)@', toaddr)[0], toaddr))
             mail['From'] = email.utils.formataddr((options.get('realm', self.__version__), fromaddr))
             data = mail.as_string()
