@@ -150,7 +150,7 @@ class MainSMTPServer(smtpd.SMTPServer):
                     return
         if self.options.get('debug'):
             print '\n-------------R-------------------\n', data, '\n---------------------------\n'
-#         self.repeatmail(email.message_from_string(data))
+        self.repeatmail(email.message_from_string(data))
         return
     
     
@@ -158,7 +158,6 @@ class MainSMTPServer(smtpd.SMTPServer):
 def start():
     global options
     if options.get('debug'):
-        import json
         print json.dumps(options, indent=True)
     addr = (options.get('bind'), options.get('port'))
     smtp_server = MainSMTPServer(addr, None)
